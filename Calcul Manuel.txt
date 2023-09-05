@@ -1,0 +1,120 @@
+Option Explicit
+
+Sub Calcul_Manuel()
+
+Application.Calculation = xlCalculationManual
+
+On Error Resume Next
+
+'''''''''''''''Interpolation Simple'''''''''''''''
+
+Dim Draft_Init_Sup, Draft_Final_Sup, Draft_Init_Inf, Draft_Final_Inf, Disp_Init_Sup, Disp_Final_Sup, Draft_Init, _
+Draft_Final, Disp_Init, Disp_Final, Disp_Init_Inf, _
+Disp_Final_Inf As Double
+Dim TPC_Init_Sup, TPC_Init_Inf, TPC_Init, TPC_Final_Sup, TPC_Final_Inf, TPC_Final As Double
+Dim LCF_Init_Sup, LCF_Init_Inf, LCF_Init, LCF_Final_Sup, LCF_Final_Inf, LCF_Final As Double
+Dim MTC_Init_plus50, MTC_Init_moins50, DeltaMTC_Init, MTC_Final_plus50, MTC_Final_moins50, DeltaMTC_Final As Double
+
+''Validation to avoid empty fields'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+       
+'''Affectations des variables
+
+ Sheets("Data").Select
+ 'ThisWorkbook.Sheets("Data").Unprotect "choose your password"
+ ActiveSheet.Protect Password:="xxxxxxxxx", UserInterfaceOnly:=True
+ 
+ Draft_Init_Sup = Range("F64").Value
+ Draft_Init_Inf = Range("F66").Value
+ Disp_Init_Sup = Range("H64").Value
+ Disp_Init_Inf = Range("H66").Value
+ Draft_Init = Range("F65").Value
+ Disp_Init = Range("H65").Value
+ 
+ Draft_Init_Sup = Draft_Init + 1
+ Draft_Init_Inf = Draft_Init - 1
+  Range("F64").Value = Draft_Init_Sup
+ Range("F66").Value = Draft_Init_Inf
+ 
+ Range("F69").Value = Range("F64").Value
+ Range("F74").Value = Range("F64").Value
+ Range("F71").Value = Range("F66").Value
+ Range("F76").Value = Range("F66").Value
+ 
+ Range("F80").Value = Range("F65").Value + 50
+ Range("F82").Value = Range("F65").Value - 50
+ 
+
+ Draft_Final_Sup = Range("L64").Value
+ Draft_Final_Inf = Range("L66").Value
+ Disp_Final_Sup = Range("N64").Value
+ Disp_Final_Inf = Range("N66").Value
+ Draft_Final = Range("L65").Value
+ Disp_Final = Range("N65").Value
+
+ Draft_Final_Sup = Draft_Final + 1
+ Draft_Final_Inf = Draft_Final - 1
+ Range("L64").Value = Draft_Final_Sup
+ Range("L66").Value = Draft_Final_Inf
+ Range("L64").Value = Draft_Final_Sup
+ Range("L66").Value = Draft_Final_Inf
+ 
+Range("L69").Value = Range("L64").Value
+ Range("L74").Value = Range("L64").Value
+ Range("L71").Value = Range("L66").Value
+ Range("L76").Value = Range("L66").Value
+ Range("L80").Value = Range("L65").Value + 50
+ Range("L82").Value = Range("L65").Value - 50
+ 
+TPC_Init_Sup = Range("I69").Value
+TPC_Init_Inf = Range("I71").Value
+TPC_Init = Range("I70").Value
+TPC_Final_Sup = Range("O69").Value
+TPC_Final_Inf = Range("O71").Value
+TPC_Final = Range("O70").Value
+ 
+ LCF_Init_Sup = Range("I74").Value
+ LCF_Init_Inf = Range("I76").Value
+ LCF_Init = Range("I75").Value
+ LCF_Final_Sup = Range("O74").Value
+ LCF_Final_Inf = Range("O76").Value
+ LCF_Final = Range("O75").Value
+ 
+ MTC_Init_plus50 = Range("I80").Value
+ MTC_Init_moins50 = Range("I82").Value
+ DeltaMTC_Init = Range("I83").Value
+ MTC_Final_plus50 = Range("O80").Value
+ MTC_Final_moins50 = Range("O82").Value
+ DeltaMTC_Final = Range("O83").Value
+
+'''Formula Displacement interpolation'''
+Disp_Init = Round(Disp_Init_Inf + (((Disp_Init_Sup - Disp_Init_Inf) / (Draft_Init_Sup - Draft_Init_Inf)) * (Draft_Init - Draft_Init_Inf)), 3)
+Disp_Final = Round(Disp_Final_Inf + (((Disp_Final_Sup - Disp_Final_Inf) / (Draft_Final_Sup - Draft_Final_Inf)) * (Draft_Final - Draft_Final_Inf)), 3)
+  
+''''Affichage du Resultat
+Range("H65").Value = Disp_Init
+Range("N65").Value = Disp_Final
+'''formula  TPC Interpolation''''''''''''
+TPC_Init = Round(TPC_Init_Inf + (((TPC_Init_Sup - TPC_Init_Inf) / (Draft_Init_Sup - Draft_Init_Inf)) * (Draft_Init - Draft_Init_Inf)), 3)
+ TPC_Final = Round(TPC_Final_Inf + (((TPC_Final_Sup - TPC_Final_Inf) / (Draft_Final_Sup - Draft_Final_Inf)) * (Draft_Final - Draft_Final_Inf)), 3)
+''''''Affichage du Resultat
+Range("I70").Value = TPC_Init
+Range("O70").Value = TPC_Final
+'''''''''Formula LCF''''
+ LCF_Init = Round(LCF_Init_Inf + (((LCF_Init_Sup - LCF_Init_Inf) / (Draft_Init_Sup - Draft_Init_Inf)) * (Draft_Init - Draft_Init_Inf)), 3)
+ LCF_Final = Round(LCF_Final_Inf + (((LCF_Final_Sup - LCF_Final_Inf) / (Draft_Final_Sup - Draft_Final_Inf)) * (Draft_Final - Draft_Final_Inf)), 3)
+''''''''''Affichage Resultat
+Range("I75").Value = LCF_Init
+Range("O75").Value = LCF_Final
+
+''''''''''Formula Delta MTC''''''
+ DeltaMTC_Init = MTC_Init_plus50 - MTC_Init_moins50
+ DeltaMTC_Final = MTC_Final_plus50 - MTC_Final_moins50
+''''''''Affichage''''''
+Range("I83").Value = DeltaMTC_Init
+Range("O83").Value = DeltaMTC_Final
+
+'''''''''''''''''''''''''''''''''''
+Application.Calculation = xlCalculationAutomatic
+End Sub

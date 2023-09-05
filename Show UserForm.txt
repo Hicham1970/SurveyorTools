@@ -1,0 +1,16 @@
+Option Explicit
+
+Sub Image7_Cliquer()
+
+  Dim MyForm  As String
+  
+  MyForm = Feuil8.Range("Z1").Value
+   
+     If MyForm = "" Then
+     
+        MsgBox "Selection not done!"
+        
+     End If
+    
+     UserForms.Add(MyForm).Show
+End Sub

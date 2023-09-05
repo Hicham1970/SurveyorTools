@@ -1,0 +1,90 @@
+Function T54B(Dens, Temp)
+
+Dim X As Double, Y As Double, A1 As Double, B1 As Double, C1 As Double, D As Double
+Dim E As Double, E1 As Double, F As Double
+        
+        Dens = Dens * 1000
+        X = Int((Dens * 100 + 25) / 50) * 0.5
+        Y = Int((Temp * 1000 + 25) / 50) * 0.05
+        
+        
+        If X >= 653 And X <= 770.5 Then
+                A1 = Int(10000000000# * 346.4228 / X / X) / 10000000000#
+                B1 = Int(10000000000# * 0.4388 / X) / 10000000000#
+                C1 = Int(10000000 * (A1 + B1) + 0.5) / 10000000
+        ElseIf X > 770.5 And X <= 787.5 Then
+                A1 = Int(10000000000# * 2680.3206 / X / X) / 10000000000#
+                C1 = Int(10000000 * (A1 - 0.00336312) + 0.5) / 10000000
+        ElseIf X > 787.5 And X <= 839 Then
+                A1 = Int(10000000000# * 594.5418 / X / X) / 10000000000#
+                C1 = Int(10000000 * A1 + 0.5) / 10000000
+        ElseIf X > 839 And X <= 1075# Then
+                A1 = Int(10000000000# * 186.9696 / X / X) / 10000000000#
+                B1 = Int(10000000000# * 0.4862 / X) / 10000000000#
+                C1 = Int(10000000 * (A1 + B1) + 0.5) / 10000000
+        Else
+                T54B = "False"
+        End If
+        
+        D = Y - 15
+        E1 = -(C1 * D) - (0.8 * C1 * C1 * D * D)
+        E = Int(100000000 * E1) / 100000000
+        F = Int(Exp(E) * 100000000 + 0.5) / 100000000
+        F = Int(F * 10000 + 0.5) / 10000
+        T54B = F
+
+End Function
+Function T54A(Dens, Temp)
+
+Dim Y As Double, G As Double, C As Double, D As Double
+Dim H As Double, F As Double
+        
+        C = Dens * 1000
+        D = Int((613.9723 / (C * C)) / 0.0000001 + 0.5) * 0.0000001
+        F = Temp - 15
+        G = Int((D * F) / 0.00000001 + 0.5) * 0.00000001
+        H = Int((0.8 * G) / 0.00000001 + 0.5) * 0.00000001
+        Y = Exp(-G * (H + 1))
+        T54A = Int(Y / 0.0001 + 0.5) * 0.0001
+End Function
+Function T54D(Dens, Temp)
+
+Dim X As Double, Y As Double, G As Double, C As Double, D As Double
+Dim H As Double, F As Double
+        
+        X = Dens * 1000
+        C = Int((X * 100 + 25) / 50) * 0.5
+        Y = Int((Temp * 1000 + 25) / 50) * 0.05
+        Rem c = x * 1000
+
+        D = Int(0.6278 / C / 0.0000001 + 0.5) * 0.0000001
+        F = Y - 15
+        G = Int((D * F) / 0.00000001 + 0.5) * 0.00000001
+        H = Int((0.8 * G) / 0.00000001 + 0.5) * 0.00000001
+        Y = Exp(-G * (H + 1))
+        T54D = Int(Y / 0.0001 + 0.5) * 0.0001
+End Function
+Function Ethanol(Dens, Temp)
+        
+        If Dens > 96.4 And Temp < 0 Then
+        Ethanol = 1 + (20 - Temp + 1) / 1000
+        
+        ElseIf Dens > 97.4 And Temp < 7 Then
+        Ethanol = 1 + (20 - Temp + 1) / 1000
+        
+        ElseIf Dens > 98.4 And Temp < 8 Then
+        Ethanol = 1 + (20 - Temp + 1) / 1000
+        
+        ElseIf Dens > 99.5 And Temp < 9 Then
+        Ethanol = 1 + (20 - Temp + 1) / 1000
+        
+        ElseIf Dens > 99.4 And Temp > 29 Then
+        Ethanol = 1 + (20 - Temp - 1) / 1000
+        
+        Else
+        Ethanol = 1 + (20 - Temp) / 1000
+        End If
+
+End Function
+
+

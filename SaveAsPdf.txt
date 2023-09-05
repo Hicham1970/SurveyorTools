@@ -1,0 +1,11 @@
+Option Explicit
+
+Sub Image12_Cliquer()
+Feuil11.ExportAsFixedFormat xlTypePDF, Environ("userprofile") & "\Desktop\\PrintOut\Deductibles.pdf"
+End Sub
+Sub Image13_Cliquer()
+Feuil9.ExportAsFixedFormat xlTypePDF, Environ("userprofile") & "\Desktop\\PrintOut\DSReport.pdf"
+End Sub
+Sub Image10_Cliquer()
+Feuil10.ExportAsFixedFormat xlTypePDF, Environ("userprofile") & "\Desktop\\PrintOut\Details.pdf"
+End Sub

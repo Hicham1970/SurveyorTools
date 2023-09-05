@@ -1,0 +1,21 @@
+Option Explicit
+
+Sub Image2_Cliquer()
+
+  Dim MyForm  As String
+  
+  MyForm = Feuil2.Range("S1").Value
+   
+     If MyForm = "" Then
+     
+        MsgBox "Selection not done!"
+        
+     End If
+    
+     UserForms.Add(MyForm).Show
+     
+     
+  
+  
+  
+End Sub

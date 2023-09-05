@@ -1,0 +1,147 @@
+Option Explicit
+
+Sub Calcul_Automatic()
+
+Application.ScreenUpdating = False
+
+'''''Calcul Automatique selon la table hydrostatique _
+du  navire incluse (TableHydro)'''''''
+
+'''''''''''''''Interpolation Simple'''''''''''''''
+
+Dim Draft_Init_Sup, Draft_Final_Sup, Draft_Init_Inf, Draft_Final_Inf, Disp_Init_Sup, Disp_Final_Sup, Draft_Init, _
+Draft_Final, Disp_Init, Disp_Final, Disp_Init_Inf, _
+Disp_Final_Inf As Double
+Dim TPC_Init_Sup, TPC_Init_Inf, TPC_Init, TPC_Final_Sup, TPC_Final_Inf, TPC_Final As Double
+Dim LCF_Init_Sup, LCF_Init_Inf, LCF_Init, LCF_Final_Sup, LCF_Final_Inf, LCF_Final As Double
+Dim MTC_Init_plus50, MTC_Init_moins50, DeltaMTC_Init, MTC_Final_plus50, MTC_Final_moins50, DeltaMTC_Final As Double
+
+  On Error Resume Next
+  
+''Validation to avoid empty fields'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ '''Unprotect Sheets
+       Unprotect
+'''Affectations des variables
+'''''Draft Initial'''''''''''''''''
+
+Sheets("Data").Activate
+'
+Draft_Init = Range("F65").Value
+Disp_Init = Range("H65").Value
+
+Sheets("TableHydro").Activate
+'''''Collecter les Données''''''
+ Draft_Init_Sup = Sheets("TableHydro").Range("I7").Value * 100
+ Draft_Init_Inf = Sheets("TableHydro").Range("I5").Value * 100
+ Disp_Init_Sup = Sheets("TableHydro").Range("J7").Value
+ Disp_Init_Inf = Sheets("TableHydro").Range("J5").Value
+ Disp_Init = Sheets("TableHydro").Range("J6").Value
+ TPC_Init_Sup = Sheets("TableHydro").Range("K7").Value
+ TPC_Init_Inf = Sheets("TableHydro").Range("K5").Value
+ TPC_Init = Sheets("TableHydro").Range("K6").Value
+ LCF_Init_Sup = Sheets("TableHydro").Range("L7").Value * 100
+ LCF_Init_Inf = Sheets("TableHydro").Range("L5").Value * 100
+ LCF_Init = Sheets("TableHydro").Range("L6").Value * 100
+ MTC_Init_plus50 = Sheets("TableHydro").Range("M11").Value
+ MTC_Init_moins50 = Sheets("TableHydro").Range("M16").Value
+ 
+  Sheets("Data").Activate
+  ''''Affichage des données'''''''''''''''''''''''''''''''
+  Sheets("Data").Range("F64").Value = Draft_Init_Sup
+  Sheets("Data").Range("F66").Value = Draft_Init_Inf
+  Sheets("Data").Range("H64").Value = Disp_Init_Sup
+  Sheets("Data").Range("H66").Value = Disp_Init_Inf
+  Sheets("Data").Range("H65").Value = Disp_Init
+  Sheets("Data").Range("I69").Value = TPC_Init_Sup
+  Sheets("Data").Range("I71").Value = TPC_Init_Inf
+  Sheets("Data").Range("I70").Value = TPC_Init
+  Sheets("Data").Range("I74").Value = Abs(LCF_Init_Sup)
+  Sheets("Data").Range("I76").Value = Abs(LCF_Init_Inf)
+  Sheets("Data").Range("I75").Value = Abs(LCF_Init)
+  Sheets("Data").Range("I80").Value = MTC_Init_plus50
+  Sheets("Data").Range("I82").Value = MTC_Init_moins50
+  
+  Sheets("Data").Range("F69").Value = Sheets("Data").Range("F64").Value
+  Sheets("Data").Range("F74").Value = Sheets("Data").Range("F64").Value
+  Sheets("Data").Range("F71").Value = Sheets("Data").Range("F66").Value
+  Sheets("Data").Range("F76").Value = Sheets("Data").Range("F66").Value
+ 
+  Sheets("Data").Range("F80").Value = Sheets("Data").Range("F65").Value + 50
+  Sheets("Data").Range("F82").Value = Sheets("Data").Range("F65").Value - 50
+ 
+  DeltaMTC_Init = MTC_Init_plus50 - MTC_Init_moins50
+  Sheets("Data").Range("I83").Value = DeltaMTC_Init
+  
+  ''''''Draft Final''''''''''''''''''''''''''
+  
+  Sheets("TableHydro").Activate
+
+ Draft_Final_Sup = Sheets("TableHydro").Range("I24").Value * 100
+ Draft_Final_Inf = Sheets("TableHydro").Range("I22").Value * 100
+ Disp_Final_Sup = Sheets("TableHydro").Range("J24").Value
+ Disp_Final_Inf = Sheets("TableHydro").Range("J22").Value
+ Disp_Final = Sheets("TableHydro").Range("J23").Value
+ TPC_Final_Sup = Sheets("TableHydro").Range("K24").Value
+ TPC_Final_Inf = Sheets("TableHydro").Range("K22").Value
+ TPC_Final = Sheets("TableHydro").Range("K23").Value
+ LCF_Final_Sup = Sheets("TableHydro").Range("L24").Value * 100
+ LCF_Final_Inf = Sheets("TableHydro").Range("L22").Value * 100
+ LCF_Final = Sheets("TableHydro").Range("L23").Value * 100
+ MTC_Final_plus50 = Sheets("TableHydro").Range("M28").Value
+ MTC_Final_moins50 = Sheets("TableHydro").Range("M33").Value
+ 
+  Sheets("Data").Activate
+  
+  Sheets("Data").Range("L64").Value = Draft_Final_Sup
+  Sheets("Data").Range("L66").Value = Draft_Final_Inf
+  Sheets("Data").Range("N64").Value = Disp_Final_Sup
+  Sheets("Data").Range("N65").Value = Disp_Final
+  Sheets("Data").Range("N66").Value = Disp_Final_Inf
+  Sheets("Data").Range("O69").Value = TPC_Final_Sup
+  Sheets("Data").Range("O71").Value = TPC_Final_Inf
+  Sheets("Data").Range("O70").Value = TPC_Final_Inf
+  Sheets("Data").Range("O74").Value = Abs(LCF_Final_Sup)
+  Sheets("Data").Range("O76").Value = Abs(LCF_Final_Inf)
+  Sheets("Data").Range("O75").Value = Abs(LCF_Final)
+  Sheets("Data").Range("O80").Value = MTC_Final_plus50
+  Sheets("Data").Range("O82").Value = MTC_Final_moins50
+  
+  
+  
+  Sheets("Data").Range("L69").Value = Sheets("Data").Range("L64").Value
+  Sheets("Data").Range("L74").Value = Sheets("Data").Range("L64").Value
+  Sheets("Data").Range("L71").Value = Sheets("Data").Range("L66").Value
+  Sheets("Data").Range("L76").Value = Sheets("Data").Range("L66").Value
+
+  Sheets("Data").Range("L80").Value = Sheets("Data").Range("L65").Value + 50
+  Sheets("Data").Range("L82").Value = Sheets("Data").Range("L65").Value - 50
+ 
+  ''''Formula'''
+  
+  DeltaMTC_Final = MTC_Final_plus50 - MTC_Final_moins50
+  Sheets("Data").Range("O83").Value = DeltaMTC_Final
+  
+ 
+'''''Protect Sheets
+Protect
+Application.Calculation = xlCalculationAutomatic
+Application.ScreenUpdating = True
+
+End Sub
+
+Sub Unprotect()
+
+ThisWorkbook.Sheets("Data").Unprotect "xxxxx"
+ThisWorkbook.Sheets("TableHydro").Unprotect "xxxxx"
+
+End Sub
+
+Sub Protect()
+
+ThisWorkbook.Sheets("Data").Protect "xxxxxxx"
+ThisWorkbook.Sheets("TableHydro").Protect "xxxxx"
+
+End Sub
+

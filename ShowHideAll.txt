@@ -1,0 +1,100 @@
+Option Explicit
+Sub HideWorksheetElements()
+
+   ActiveWindow.DisplayHeadings = False
+   
+
+End Sub
+Sub RestorElements()
+
+  Application.DisplayFormulaBar = True
+  
+
+End Sub
+Sub WorksheetToShow(ByVal nameOfws As String)
+
+   Dim wsToShow As Worksheet
+   Dim ws As Worksheet
+
+   On Error Resume Next
+   Set wsToShow = ThisWorkbook.Worksheets(nameOfws)
+   On Error GoTo 0
+
+        If Not wsToShow Is Nothing Then
+                 wsToShow.Visible = xlSheetVisible
+            For Each ws In ThisWorkbook.Worksheets
+                      If ws.Name <> wsToShow.Name Then
+                         ws.Visible = xlSheetVeryHidden
+                      End If
+          Next ws
+        HideWorksheetElements
+     End If
+     
+End Sub
+Sub HideAll()
+
+'Hide Horizontal scroll bar
+ActiveWindow.DisplayHorizontalScrollBar = False
+
+' hide vertical scroll bar
+ActiveWindow.DisplayVerticalScrollBar = False
+
+'hide the Rows/columns heading
+ActiveWindow.DisplayHeadings = False
+
+'hide worksheet tab
+ActiveWindow.DisplayWorkbookTabs = False
+
+'hide status Bar(bottom of the window
+Application.DisplayStatusBar = False
+
+'hide formulaBar
+Application.DisplayFormulaBar = False
+
+' hide rubbon menu et le quick acces toolBar
+Application.ExecuteExcel4Macro "show.toolbar(""Ribbon"",false)"
+
+'Display FullScreen
+Application.DisplayFullScreen = True
+
+End Sub
+
+Sub ShowAll()
+
+'Exit FullScreen
+Application.DisplayFullScreen = False
+
+'Show Horizontal scroll bar
+ActiveWindow.DisplayHorizontalScrollBar = True
+
+' Show vertical scroll bar
+ActiveWindow.DisplayVerticalScrollBar = True
+
+'Show the Rows/columns heading
+ActiveWindow.DisplayHeadings = True
+
+'Show worksheet tab
+ActiveWindow.DisplayWorkbookTabs = True
+
+'Show status Bar(bottom of the window
+Application.DisplayStatusBar = True
+
+'Show formulaBar
+Application.DisplayFormulaBar = True
+
+
+' Show rubbon menu et le quick acces toolBar
+Application.ExecuteExcel4Macro "show.toolbar(""Ribbon"", True)"
+
+End Sub
+
+
+
+
+
+
+
+
+
+
+
