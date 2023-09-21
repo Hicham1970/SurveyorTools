@@ -12,5 +12,6 @@ You will find:
 And more......
 
 
-PS: This is from my proper labour, if you find any mistakes or even faults, please advise me, i still learning each day
-To take a maximum adventage of this worksheet, you have to accept Macros in your machine .
+PS: This is from my proper labour, if you find any mistakes or even faults, please advise me, I still learning each day
+To take maximum advantage of this worksheet, you have to accept Macros in your machine, and also create a folder 'PrintOut' to save your printing.
+
