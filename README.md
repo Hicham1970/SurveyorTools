@@ -11,3 +11,4 @@ You will find:
 - Frm_DWA: For the Dock water Allowance
 And more......
 PS: This is from my proper labour, if you find any mistakes or even faults, please advise me , i still learning each day
+To take a maximum adventage of this worksheet, you have to accept Macros in your machine .
